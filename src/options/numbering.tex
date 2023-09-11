@@ -1,0 +1,64 @@
+\newcounter{example}
+
+\makeatletter
+\@addtoreset{example}{section}
+\makeatother
+
+\newcommand{\example}[1][]{
+	\stepcounter{example}
+	\rm
+	\noindent \textbf{Example \thesection.\theexample.}
+	\label{#1}
+}
+
+\newcounter{exercise}
+
+\makeatletter
+\@addtoreset{exercise}{section}
+\makeatother
+
+\newcommand{\exercise}[1][]{
+	\stepcounter{exercise}
+	\rm
+	\noindent \textbf{Exercise \thesection.\theexercise.}
+}
+
+\newcounter{problem}
+
+\makeatletter
+\@addtoreset{problem}{section}
+\makeatother
+
+\newcommand{\problem}[1][]{
+	\stepcounter{problem}
+	\rm
+	\noindent \textbf{문제 \thesection.\theproblem.}
+	\label{#1} \\
+}
+
+
+\newcounter{test}
+
+\makeatletter
+\@addtoreset{test}{section}
+\makeatother
+
+\newcommand{\test}[1][]{
+	\stepcounter{test}
+	\rm
+	\noindent \textbf{TEST \thetest.}
+	\label{#1} \\
+}
+
+\newcounter{homework}
+
+\makeatletter
+\@addtoreset{homework}{section}
+\makeatother
+
+\newcommand{\homework}[1][]{
+	\stepcounter{homework}
+	\rm
+	\noindent \textbf{연습문제 \thesection.\thehomework.}
+	\label{#1} \\
+}

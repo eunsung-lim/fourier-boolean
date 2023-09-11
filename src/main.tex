@@ -1,0 +1,124 @@
+%! Author = eunsung
+%! Date = 2023/09/11
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{import}
+
+\usepackage{a4wide}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx,xcolor}
+\usepackage{tikz,ytableau}
+\usepackage{bm}
+\usetikzlibrary{decorations.pathreplacing}
+\ytableausetup{aligntableaux=bottom}
+\numberwithin{equation}{section}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\theoremstyle{definition}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{question}[thm]{Question}
+\newtheorem{problem}[thm]{Problem}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem*{note}{Note}
+
+% Options
+\import{./options}{page.tex}
+\import{./options}{header.tex}
+\import{./options}{packages.tex}
+% \import{./options}{commands.tex}
+% \import{./options}{numbering.tex}
+
+% \newtheorem{solution}{}[section]
+
+\newtheorem{solinner}{}[section]
+\newenvironment{sol}[1]{%
+  \renewcommand\thesolinner{#1}%
+  \solinner
+}{\endsolinner}
+
+
+
+% Document
+\begin{document}
+
+\setcounter{tocdepth}{3}
+
+\tableofcontents
+
+\clearpage
+
+\section{Boolean functions and the Fourier expansions}
+
+\begin{defn}\label{defn:bool_func}
+	Let $n$ be a positive integer. A \textbf{Boolean function} on $n$ variables is a function $f:\{0,1\}^n \to \{0,1\}$ or $f:\{\pm 1\}^n \to \{\pm 1\}$.
+\end{defn}
+
+List of some Boolean functions
+\begin{itemize}
+	\item $\min_n$, $\max_n$ : minimum and maximum function
+	\item $Maj_n$ : majority function
+	\item
+\end{itemize}
+
+For each point $a = \{a_1, \cdots, a_n\} \in \{\pm 1\}^n$, the indicator polynomial
+$$1_{\{a\}}(x) = \prod_i \left(\frac{1+a_i x_i}{2}\right)$$
+tkaes value 1 when $x=a$ and value 0 otherwise.
+
+\begin{defn}\label{defn:fourier_expansion}
+	Let $f:\{\pm 1\}^n \to \{\pm 1\}$ be a Boolean function. The \textbf{Fourier expansion} of $f$ is the following expression:
+	$$f(x) = \sum_{S \subseteq [n]} \hat{f}(S) x^S$$
+	where $\hat{f}(S)$ are real numbers called the \textbf{Fourier coefficients} of $f$.
+
+	For $S \subseteq [n]$, we define $\chi_S: \mathbb{F}_2^n \rightarrow \mathbb{R}$ by
+	$$\chi_S(x) = (-1)^{\langle x, S \rangle}$$
+	where $\langle x, S \rangle = \sum_{i \in S} x_i$. We call $\chi_S$ the \textbf{character} of $S$.
+	Further, $\chi_S$ satisfies $\chi_S(x+y) = \chi_S(x) \chi_S(y)$.
+\end{defn}
+
+\begin{defn}\label{defn:inner_prod}
+	Let $f,g: \{\pm 1\}^n \to \{\pm 1\}$ be Boolean functions. The \textbf{inner product} of $f$ and $g$ is defined by
+	$$\langle f, g \rangle = \frac{1}{2^n} \sum_{x \in \{\pm 1\}^n} f(x) g(x)$$
+\end{defn}
+
+\begin{thm}\label{thm:fourier_expansion}
+	Let $f:\{\pm 1\}^n \to \{\pm 1\}$ be a Boolean function. Then
+	$$\hat{f}(S) = \langle f, \chi_S \rangle$$
+\end{thm}
+
+\begin{prop}\label{fourier_coef}
+Let $f:\{\pm 1\}^n \to \{\pm 1\}$ be a Boolean function. Then
+	$$\hat{f}(S) = \langle f, \chi_S \rangle = \mathbb{E}_{\bm{x} ~ } \frac{1}{2^n} \sum_{x \in \{\pm 1\}^n} f(x) \chi_S(x)$$
+\end{prop}
+
+\clearpage
+
+\subsection{Solutions}
+
+\begin{sol}{1.1(a)}\label{1.1(a)}
+	$min_2(x) = 1 \quad \iff \quad x = (1, 1)$. 
+\end{sol}
+
+
+\begin{sol}{A}[title]\label{baz}
+This is a theorem.
+\end{sol}
+
+
+\clearpage
+
+\bibliography{main}
+\bibliographystyle{plain}
+
+
+\end{document}
