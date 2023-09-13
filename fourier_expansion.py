@@ -114,6 +114,10 @@ class Monomial:
     def __repr__(self):
         return str(self)
 
+    # TODO
+    def eval(self):
+        pass
+
 
 
 
@@ -183,6 +187,30 @@ class Polynomial:
     def __repr__(self):
         return str(self)
 
+    # TODO
+    def eval(self):
+        pass
+
+
+class FourierExpansion(Polynomial):
+    def __init__(self, f: Callable, n: int):
+        super().__init__()
+        self.f = f
+        self.n = n
+        p = Polynomial("0")
+        for a in product([-1, 1], repeat=n):
+            q = Polynomial(str(f(*a)))
+            for i in range(n):
+                if a[i] == 1:
+                    q = q * Polynomial(f"1/2 + 1/2 x{i+1}")
+                else:
+                    q = q * Polynomial(f"1/2 + -1/2 x{i+1}")
+            p += q
+        self.monomials = p.monomials
+        self.simplify()
+
+    def __call__(self, *args):
+        return self.f(*args)
 
 def fourier_expansion(f: Callable, n: int):
     p = Polynomial("0")

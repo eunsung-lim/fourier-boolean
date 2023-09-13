@@ -1,6 +1,9 @@
 ### Example user template template
 ### Example user template
 
+*.ipynb
+*.ipynb_checkpoints
+
 # IntelliJ project files
 .idea
 *.iml
