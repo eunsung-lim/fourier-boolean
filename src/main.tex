@@ -1,5 +1,6 @@
-%! Author = eunsung
+% ! Author = eunsung
 %! Date = 2023/09/11
+\nocite{*}
 
 % Preamble
 \documentclass[11pt]{article}
@@ -9,26 +10,21 @@
 \usepackage{import}
 
 \usepackage{kotex}
-\usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{authoraftertitle}
 \usepackage[framemethod=tikz]{mdframed}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
 \usepackage[shortlabels]{enumitem}
 \usepackage{multicol}
 \usepackage{etoolbox}
 
-\DeclareMathOperator{\sech}{sech}
-\DeclareMathOperator{\csch}{csch}
-
 \usepackage{a4wide}
 \usepackage{amsmath,amsthm,amssymb}
+\usepackage{bbm, dsfont}
 \usepackage{hyperref}
 \usepackage{graphicx,xcolor}
 \usepackage{tikz,ytableau}
 \usepackage{bm}
+
 \usetikzlibrary{decorations.pathreplacing}
 \ytableausetup{aligntableaux=bottom}
 \numberwithin{equation}{section}
@@ -57,12 +53,8 @@
 
 % \newtheorem{solution}{}[section]
 
-\newtheorem{solinner}{}[section]
-\newenvironment{sol}[1]{%
-  \renewcommand\thesolinner{#1}%
-  \solinner
-}{\endsolinner}
 
+\newcommand{\innerproduct}[2]{\langle #1, #2 \rangle}
 
 
 % Document
@@ -91,7 +83,7 @@ List of some Boolean functions
 \end{itemize}
 
 For each point $a = \{a_1, \cdots, a_n\} \in \{\pm 1\}^n$, the indicator polynomial
-$$1_{\{a\}}(x) = \prod_i \left(\frac{1+a_i x_i}{2}\right)$$
+$$1_{\{a\}}(x) = \prod_{i} \left(\frac{1+a_i x_i}{2}\right)$$
 takes value 1 when $x=a$ and value 0 otherwise.
 
 \begin{defn}\label{defn:fourier_expansion}
@@ -125,14 +117,66 @@ Let $f:\{\pm 1\}^n \to \{\pm 1\}$ be a Boolean function. Then
 \subsection*{Solutions}
 \addcontentsline{toc}{subsection}{Solutions}
 
-\begin{sol}{1.1(a)}\label{1.1(a)}
-	$min_2(x) = 1 \quad \iff \quad x = (1, 1)$. 
-\end{sol}
+\begin{enumerate}[\thesection.\arabic{enumi}]
+	\item
+	\begin{enumerate}[(a)]
+		\item\label{\thesection.1(a)} $\min_2(x_1, x_2) =
+			\begin{cases}
+				1 & \text{if } (x_1, x_2) = (1, 1) \\
+				-1 & \text{otherwise}
+			\end{cases}$
+			
+			which means $\min_2(x_1, x_2) = -1 + 2 \times \mathds{1}_{\{(1, 1)\}}(x)$
+			with $\mathds{1}_{\{(1, 1)\}}(x) = \prod_{i=1}^2 \frac{1+x_i}{2}$. 
+			
+			Therefore $\min_2(x_1, x_2) = -1 + 2 \times \prod_{i=1}^2 \frac{1+x_i}{2} = -\frac{1}{2} + \frac{1}{2} x_1 + \frac{1}{2} x_2 + \frac{1}{2} x_3$.
+
+		\item Similar to (a), 
+		
+		$\min_3(x_1, x_2, x_3) = -1 + 2 \times \prod_{i=1}^3 \frac{1+x_i}{2} = -\frac{1}{4} + \frac{1}{4}\sum_i x_i + \frac{1}{4} \sum_{i, j} x_i x_j + x_1 x_2 x_3$
+
+		\item In $\{ 0, 1 \}$ setting, $\chi_S(x) = (-1)^{\sum_{i \in S} x_i}$. The inner product is 
+		\begin{align*}
+			\innerproduct{\mathds{1}_{\{a\}}}{\chi_S} 
+			&= \mathds{E}_{x \sim \{0, 1\}^n} \left[ \mathds{1}_{\{a\}}(x) \chi_S(x) \right] \\
+			&= \frac{1}{2^n} \chi_S (x) \\
+			&= \frac{1}{2^n} (-1)^{\sum_{i \in S} x_i}
+		\end{align*}
+
+		Hence, the Fourier expansion of $\mathds{1}_{\{a\}}$ is
+		\begin{align*}
+			\mathds{1}_{\{a\}}(x) 
+			&= \sum_{S \subseteq [n]} \frac{1}{2^n} \chi_S(a)\chi_S(x) \\
+			&= \frac{1}{2^n} \sum_{S \subseteq [n]} \chi_S(a+x) \\
+			&= \frac{1}{2^n} \sum_{S \subseteq [n]} (-1)^{\sum_{i \in S} (a_i + x_i)}
+		\end{align*}
+
+		\item $\phi_{\{a\}}(x) = \mathds{1}_{\{a\}}(x) = \frac{1}{2^n} \sum_{S \subseteq [n]} (-1)^{\sum_{i \in S} (a_i + x_i)}$
+		\item \begin{align*}
+			\phi_{\{a, a+e_i\}} 
+			&= \frac{1}{2} \left( \mathds{1}_{\{a\}} + \mathds{1}_{\{a+e_i\}} \right) \\
+			&= \frac{1}{2} \cdot \frac{1}{2^n} \sum_{S \subseteq [n]} \left( (-1)^{\sum_{j \in S} a_j} + (-1)^{\sum_{j \in S} a_j + \delta_{ij}} \right) \chi_S(x)
+		\end{align*}
+		The term $(-1)^{\sum_{j \in S} a_j} + (-1)^{\sum_{j \in S} a_j + \delta_{ij}}$ is 0 if $i \in S$ and $2(-1)^{\sum_{j \in S} a_j}$ otherwise. Therefore,
+		\begin{align*}
+			\phi_{\{a, a+e_i\}} 
+			&= \frac{1}{2} \cdot \frac{1}{2^n} \sum_{S \subseteq [n] \setminus \{i\}} (-1)^{\sum_{j \in S} a_j} \chi_S(x) \\
+			&= \frac{1}{2^n} \sum_{S \subseteq [n] \setminus \{i\}} (-1)^{\sum_{j \in S} (a_j + x_j)}
+		\end{align*}
+		\item Let $\phi$ be the probability density function of each $x_i$, respectively. Then $f = \prod_1^n \phi(x_i)$ 
+		and the fourier coefficient is 
+		\begin{align*}
+			\hat{f}(S) 
+			&= \innerproduct{f}{\chi_S} \\
+			&= \mathds{E}_{x \sim \{\pm 1\}^n} \left[ f(x) \chi_S(x) \right] \\
+			&= \mathds{E}_{x \sim \{\pm 1\}^n} \left[ \prod_{i=1}^n \phi(x_i) \chi_S(x) \right] \\
+		\end{align*}
+	
+	\end{enumerate}
+	\item ghi
 
 
-\begin{sol}{A}[title]\label{baz}
-This is a theorem.
-\end{sol}
+\end{enumerate}
 
 
 \clearpage
